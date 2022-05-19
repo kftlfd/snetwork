@@ -1,12 +1,16 @@
-from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
 
-from .models import User
+from .models import *
 from .views_auth import *
+from .views_api import *
 
 
 def index(request):
-    return render(request, "network/index.html")
+    posts = Post.objects.all()
+    # jposts = [p.json() for p in Post.objects.all()]
+
+    context = {
+        'posts': posts, 
+        # 'jposts': jposts
+    }
+    return render(request, "network/index.html", context)
