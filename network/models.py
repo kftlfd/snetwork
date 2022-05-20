@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
-    pass
+    following = models.ManyToManyField('User', symmetrical=False, related_name='followers')
 
 
 class Post(models.Model):
