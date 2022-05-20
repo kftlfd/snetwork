@@ -12,11 +12,8 @@
 </div>
 
 {% for post in user.user_posts.all %}
-<div>
-  <div>{{ post.user }}</div>
-  <div>{{ post.content }}</div>
-  <div>{{ post.time }}</div>    
-</div>
+  <br>
+  {% include "network/post.html" %}
 {% endfor %}
 
 {% endif %}

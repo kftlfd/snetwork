@@ -3,11 +3,13 @@
 {% block body %}
 
 {% if user.is_authenticated %}
-<form action="{% url 'add-post' %}" method="POST">
-  {% csrf_token %}
-  <input type="text" name="content">
-  <button type="submit">Post</button>
-</form>
+<div class="card card-body">
+  <form action="{% url 'add-post' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="content">
+    <button type="submit">Post</button>
+  </form>
+</div>
 {% endif %}
 
 
@@ -15,14 +17,7 @@
 <div>
   {% for post in posts%}
   <br>
-  <div>
-    <div>{{ post.user }}</div>
-    <div>{{ post.content }}</div>
-    <div>{{ post.time }}</div>
-    <div>Likes: {{ post.post_reactions.count }}</div>
-    <div>Comments: {{ post.post_comments.count }}</div>
-    <a href="{% url 'post_view' post.id %}"><button>go to post</button></a>
-  </div>
+  {% include "network/post.html" %}
   {% endfor %}
 </div>
 {% endif %}
