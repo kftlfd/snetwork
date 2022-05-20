@@ -16,7 +16,7 @@ class Post(models.Model):
 class Reaction(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_reactions')
     post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='post_reactions')
-    type = models.IntegerField()
+    type = models.IntegerField() # for future multiple reactions
 
 
 class Comment(models.Model):
