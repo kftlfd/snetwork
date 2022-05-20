@@ -1,0 +1,24 @@
+{% extends "network/layout.html" %}
+{% load custom_tags %}
+
+{% block body %}
+
+{% if user %}
+
+<div>
+  <div>{{ user.username }}</div>
+  <div>Following: {{ user.following.count }}</div>
+  <div>Followers: {{ user.followers.count }}</div>
+</div>
+
+{% for post in user.user_posts.all %}
+<div>
+  <div>{{ post.user }}</div>
+  <div>{{ post.content }}</div>
+  <div>{{ post.time }}</div>    
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
