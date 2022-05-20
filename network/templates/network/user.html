@@ -3,15 +3,27 @@
 
 {% block body %}
 
-{% if user %}
+{% if u %}
 
 <div>
-  <div>{{ user.username }}</div>
-  <div>Following: {{ user.following.count }}</div>
-  <div>Followers: {{ user.followers.count }}</div>
+  <div>{{ u.username }}</div>
+  <div>Following: {{ u.following.count }}</div>
+  <div>Followers: {{ u.followers.count }}</div>
 </div>
 
-{% for post in user.user_posts.all %}
+{% if user.is_authenticated and user != u %}
+<form action="{% url 'user_follow' u.id %}" method="POST">
+  {% csrf_token %}
+  {% user_follows user u as follows %}
+  {% if not follows %}
+  <button type="submit" name="follow" value="true">Follow</button>
+  {% else %}
+  <button type="submit" name="follow" value="false">Unfollow</button>
+  {% endif %}
+</form>
+{% endif %}
+
+{% for post in u.user_posts.all %}
   <br>
   {% include "network/post.html" %}
 {% endfor %}

@@ -13,6 +13,7 @@ urlpatterns = [
     path("post/<int:post_id>", views.post_view, name="post_view"),
     path("user/<int:user_id>", views.user_view, name="user_view"),
     path("feed", views.user_feed, name="user_feed"),
+    path("follow/<int:user_id>", views.user_follow, name="user_follow"),
 
     path("add-post", views.api_add_post, name="add-post"),
     path("add-reaction", views.api_add_reaction, name="add-reaction"),
