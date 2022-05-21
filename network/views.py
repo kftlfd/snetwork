@@ -15,8 +15,7 @@ def index(request):
     page = p.page(request.GET.get('page', 1))
 
     context = {
-        'posts': posts, 
-    }
+        'posts': page}
     if page.has_other_pages():
         context['page'] = page
     return render(request, "network/index.html", context)
