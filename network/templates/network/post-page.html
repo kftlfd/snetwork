@@ -6,13 +6,15 @@
 {% if post %}
 <div>
 
-  <div><a href="{% url 'user_view' user.id %}">{{ post.user }}</a></div>
+  <div><a href="{% url 'user_view' post.user.id %}">{{ post.user }}</a></div>
   <div>{{ post.content }}</div>
   <div>{{ post.time }}</div>
 
   <hr>
 
   <div>Reactions: {{ post.post_reactions.count }}</div>
+  
+  {% if user.is_authenticated %}
   <form action="{% url 'add-reaction' %}" method="POST">
     {% csrf_token %}
     <input type="hidden" name="post" value={{ post.id }}>
@@ -24,6 +26,7 @@
     <button type="submit" name="action" value="remove">Unlike</button>
     {% endif %}
   </form>
+  {% endif %}
   
   <hr>
   

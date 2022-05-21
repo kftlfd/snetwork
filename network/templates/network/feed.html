@@ -5,16 +5,14 @@
 <h3>Feed</h3>
 
 {% if user.following.count < 1 %}
-<div>Not following anyone</div>
+  <div>Not following anyone</div>
+{% else %}
+  {% for post in posts%}
+    {% include "network/post.html" %}
+  {% empty %}
+    <div>No posts</div>
+  {% endfor %}
+  {% include 'network/pagination.html' %}
 {% endif %}
-
-{% for post in posts%}
-  <br>
-  {% include "network/post.html" %}
-{% empty %}
-  <div>No posts</div>
-{% endfor %}
-
-{% include 'network/pagination.html' %}
 
 {% endblock %}
