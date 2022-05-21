@@ -23,10 +23,12 @@
 </form>
 {% endif %}
 
-{% for post in u.user_posts.all %}
+{% for post in posts %}
   <br>
   {% include "network/post.html" %}
 {% endfor %}
+
+{% include 'network/pagination.html' %}
 
 {% endif %}
 
