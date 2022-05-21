@@ -1,8 +1,10 @@
+{% load custom_tags %}
+
 <div class="card card-body mb-3">
   <div>{{ post.user }} | {{ post.time }}</div>
   <div>{{ post.content }}</div>
   <div>
-    <span>Likes: {{ post.post_reactions.count }} | </span>
+    {% like_btn user post %}
     <span>Comments: {{ post.post_comments.count }} | </span>
     <span><a class="btn btn-sm btn-outline-secondary" href="{% url 'post_view' post.id %}">go to post</a></span>
   </div>

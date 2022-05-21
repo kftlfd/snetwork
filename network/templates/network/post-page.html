@@ -12,21 +12,7 @@
 
   <hr>
 
-  <div>Reactions: {{ post.post_reactions.count }}</div>
-  
-  {% if user.is_authenticated %}
-  <form action="{% url 'add-reaction' %}" method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="post" value={{ post.id }}>
-    <input type="hidden" name="type" value=1>
-    {% user_reacted user post as reacted %}
-    {% if not reacted %}
-    <button type="submit" name="action" value="add">Like</button>
-    {% else %}
-    <button type="submit" name="action" value="remove">Unlike</button>
-    {% endif %}
-  </form>
-  {% endif %}
+  {% like_btn user post %}
   
   <hr>
   

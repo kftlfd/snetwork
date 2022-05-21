@@ -25,11 +25,12 @@ def api_add_reaction(request):
         p = Post.objects.get(pk=request.POST['post'])
         t = request.POST['type']
         a = request.POST['action']
+        r = p.post_reactions.filter(user=u)
         if a == 'add':
             new_reaction = Reaction(user=u, post=p, type=t)
             new_reaction.save()
-        if a == 'remove':
-            reaction = Reaction.objects.filter(user=u, post=p).first()
+        elif r:
+            reaction = r.all()
             reaction.delete()
     # return HttpResponse(status=204)
     return redirect('post_view', post_id=p.id)
