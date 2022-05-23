@@ -17,5 +17,6 @@ urlpatterns = [
 
     path("add-post", views.api_add_post, name="add-post"),
     path("add-reaction", views.api_add_reaction, name="add-reaction"),
-    path("add-comment", views.api_add_comment, name="add-comment")
+    path("add-comment", views.api_add_comment, name="add-comment"),
+    path("spa/post/<int:post_id>", views.api_post, name="api-post")
 ]

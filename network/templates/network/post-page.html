@@ -6,9 +6,72 @@
 {% if post %}
 <div>
 
+  {% if post.user == user %}
+  <button id='editBtn'>Edit</button>
+  {% endif %}
   <div><a href="{% url 'user_view' post.user.id %}">{{ post.user }}</a></div>
-  <div>{{ post.content }}</div>
+  <div id='postContent'>{{ post.content }}</div>
+  <form id='editForm'>
+    <input id='editInput' type="text" value="{{ post.content }}">
+    <button type="submit">Edit</button>
+  </form>
   <div>{{ post.time }}</div>
+
+  <script>
+    const editBtn = document.querySelector('#editBtn');
+    const postContent = document.querySelector('#postContent');
+    const editForm = document.querySelector('#editForm');
+    const editInput = document.querySelector('#editInput');
+
+    editForm.style.display = 'none';
+
+    editBtn.addEventListener('click', ()=>{
+      if (editForm.style.display == 'none') {
+        postContent.style.display = 'none';
+        editForm.style.display = 'block';
+      } else {
+        postContent.style.display = 'block';
+        editForm.style.display = 'none';
+      }
+    });
+
+    // from https://docs.djangoproject.com/en/4.0/ref/csrf/
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    editForm.addEventListener('submit', () => {
+      event.preventDefault()
+
+      fetch('{% url "api-post" post.id %}', {
+        method: 'POST',
+        headers: {'X-CSRFToken': csrftoken},
+        body: JSON.stringify({
+          content: editInput.value
+        })
+      })
+      .then(r => console.log(r))
+      .catch(e => console.error(e));
+
+      postContent.innerText = editInput.value;
+      postContent.style.display = 'block';
+      editForm.style.display = 'none';
+    });
+
+  </script>
 
   <hr>
 

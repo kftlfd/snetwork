@@ -44,3 +44,16 @@ def api_add_comment(request):
         new_comment = Comment(user=u, post=p, content=c)
         new_comment.save()
     return HttpResponse(status=204)
+
+
+def api_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    if request.method == 'POST' and request.user == post.user:
+        data = json.loads(request.body)
+        content = data.get('content', post.content)
+        try:
+            post.content = content
+            post.save()
+            return HttpResponse(status=204)
+        except:
+            return HttpResponse(status=500)
