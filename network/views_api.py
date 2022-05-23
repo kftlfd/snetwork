@@ -21,10 +21,13 @@ def api_add_post(request):
 
 def api_add_reaction(request):
     if request.method == 'POST':
+        data = json.loads(request.body)
         u = request.user
-        p = Post.objects.get(pk=request.POST['post'])
-        t = request.POST['type']
-        a = request.POST['action']
+        p_id = data.get('post', None)
+        if not p_id: return HttpResponse(status=404)
+        p = Post.objects.get(pk=p_id)
+        t = data.get('type')
+        a = data.get('action')
         r = p.post_reactions.filter(user=u)
         if a == 'add':
             new_reaction = Reaction(user=u, post=p, type=t)
@@ -32,8 +35,8 @@ def api_add_reaction(request):
         elif r:
             reaction = r.all()
             reaction.delete()
-    # return HttpResponse(status=204)
-    return redirect('post_view', post_id=p.id)
+        return HttpResponse(status=204)
+    return HttpResponse(status=400)
 
 
 def api_add_comment(request):
