@@ -1,5 +1,46 @@
+.post .header,
+.post .footer,
+.post .footer .likes {
+  display: flex;
+  align-items: center;
+}
+.post .header,
+.post .footer {
+  gap: 1rem;
+}
+.post .header .user {
+  border: 1px solid #eee;
+}
+.post .header .user,
+.post .footer .comments {
+  display: inline-block;
+  padding-inline: 0.5rem;
+  border-radius: 0.25rem;
+  color: #222;
+  text-decoration: none;
+}
+.post .header .user:hover,
+.post .footer .comments:hover {
+  background-color: #eee;
+}
+.post .header .time {
+  padding-left: 1rem;
+  border-left: 1px solid #eee;
+  font-size: 0.8rem;
+  color: #555;
+}
+.post .content {
+  margin: 0.75rem 0;
+}
+.post .footer .likes {
+  gap: 0.5rem;
+  padding-right: 1rem;
+  border-right: 1px solid #eee;
+}
+
+
 .like-btn {
-  height: 2rem;
+  height: 1.3rem;
   aspect-ratio: 1/1;
   border: none;
   background-color: transparent;
