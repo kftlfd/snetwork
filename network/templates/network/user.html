@@ -14,7 +14,7 @@
   </div>
   
   {% if user.is_authenticated and user != u %}
-  <form action="{% url 'user_follow' %}" method="POST">
+  <form action="{% url 'user_follow' %}" method="POST" data-follow-form>
     {% csrf_token %}
     <input type="hidden" name="user" value="{{u.id}}">
     {% user_follows user u as follows %}

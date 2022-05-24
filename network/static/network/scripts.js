@@ -22,7 +22,7 @@ document.querySelectorAll('[data-like-form]').forEach(form => {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
     
-    fetch("add-reaction", {
+    fetch("/post/reaction", {
       method: 'POST',
       headers: {'X-CSRFToken': this.csrfmiddlewaretoken.value},
       body: JSON.stringify({
@@ -135,4 +135,36 @@ if (document.querySelector('[data-post-edit-btn]')) {
     });
   
   });
+}
+
+
+// ***** follow user *****
+if (document.querySelector('[data-follow-form]')) {
+  const followForm = document.querySelector('[data-follow-form]');
+
+  followForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    fetch('/user/follow', {
+      method: 'POST',
+      headers: {'X-CSRFToken': csrftoken},
+      body: JSON.stringify({
+        user: Number(followForm.user.value),
+        follow: followForm.follow.value
+      })
+    })
+    .then(r => {
+      console.log(r);
+      if (r.ok) {
+        history.go(0);
+      } else {
+        window.alert('Failed to update follow status')
+      }
+    })
+    .catch(e => {
+      console.error(e);
+      window.alert('Failed to update follow status')
+    });
+
+  })
 }
