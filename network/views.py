@@ -19,3 +19,6 @@ def index(request):
     if page.has_other_pages():
         context['page'] = page
     return render(request, "network/index.html", context)
+
+def spa(request):
+    return render(request, "network/react.html")
