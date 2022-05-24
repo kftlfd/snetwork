@@ -7,7 +7,8 @@ from .models import *
 
 def post_view(request, post_id):
     post = Post.objects.get(pk=post_id)
-    return render(request, "network/post-page.html", {'post': post})
+    comments = post.post_comments.order_by('-id')
+    return render(request, "network/post-page.html", {'post': post, 'comments': comments})
 
 
 def post_add(request):
@@ -88,11 +89,20 @@ def post_reaction(request):
 
 def post_comment(request):
     if request.method == 'POST' and request.user.is_authenticated:
+        data = json.loads(request.body)
         u = request.user
-        p = Post.objects.get(pk=request.POST['post'])
-        c = request.POST['content']
+        post_id = data.get('post')
+        content = data.get('content')
+        if not post_id or not content:
+            return HttpResponse(status=400)
+
         try:
-            new_comment = Comment(user=u, post=p, content=c)
+            post = Post.objects.get(pk=post_id)
+        except:
+            return HttpResponse(status=404)
+
+        try:
+            new_comment = Comment(user=u, post=post, content=content)
             new_comment.save()
             return HttpResponse(status=201)
         except:

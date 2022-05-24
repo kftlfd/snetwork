@@ -39,7 +39,7 @@
 </div>
 
 {% if user.is_authenticated %}
-<form class="comment-form" action="{% url 'post_comment' %}" method="POST">
+<form class="comment-form" action="{% url 'post_comment' %}" method="POST" data-comment-form>
   {% csrf_token %}
   <input type="hidden" name="post" value="{{ post.id }}">
   <textarea class="form-control mb-1" type="text" name="content"></textarea>
@@ -48,7 +48,7 @@
 {% endif %}
 
 <div>
-  {% for comment in post.post_comments.all %}
+  {% for comment in comments %}
   <div class="comment">
     <div class="header">
       <a href="{% url 'user_view' comment.user.id %}" class="user">{{ comment.user }}</a>

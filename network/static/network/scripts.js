@@ -138,6 +138,38 @@ if (document.querySelector('[data-post-edit-btn]')) {
 }
 
 
+// ***** add comment *****
+if (document.querySelector('[data-comment-form]')) {
+  const commentForm = document.querySelector('[data-comment-form]');
+
+  commentForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    fetch('/post/comment', {
+      method: 'POST',
+      headers: {'X-CSRFToken': csrftoken},
+      body: JSON.stringify({
+        post: Number(commentForm.post.value),
+        content: commentForm.content.value
+      })
+    })
+    .then(r => {
+      console.log(r);
+      if (r.ok) {
+        commentForm.content.value = '';
+        history.go(0);
+      } else {
+        window.alert('Failed to create comment')
+      }
+    })
+    .catch(e => {
+      console.error(e);
+      window.alert('Failed to create comment')
+    });    
+  })
+}
+
+
 // ***** follow user *****
 if (document.querySelector('[data-follow-form]')) {
   const followForm = document.querySelector('[data-follow-form]');
