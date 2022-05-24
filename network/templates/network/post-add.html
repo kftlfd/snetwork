@@ -1,10 +1,10 @@
 {% if user.is_authenticated %}
-<form class="card card-body mb-3" action="{% url 'post_add' %}" method="POST" data-add-post-form>
+<form class="mb-3 add-form" action="{% url 'post_add' %}" method="POST" data-add-post-form>
   <h5>Add new post</h5>
   {% csrf_token %}
   <textarea class="form-control mb-2" name="content" data-add-post-content></textarea>
   <div>
-    <button class="btn btn-primary" type="submit">Post</button>
+    <button class="btn btn-sm btn-primary" type="submit">Post</button>
   </div>
 </form>
 {% endif %}

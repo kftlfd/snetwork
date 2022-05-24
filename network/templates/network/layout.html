@@ -52,12 +52,11 @@
     </div>
   </nav>
   
-  <div class="container-md">
+  <div class="body">
     {% block body %}
     {% endblock %}
+    {% include 'network/pagination.html' %}
   </div>
-
-  {% include 'network/pagination.html' %}
 
 </body>
 

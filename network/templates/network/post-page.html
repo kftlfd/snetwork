@@ -2,50 +2,65 @@
 {% load custom_tags %}
 
 {% block body %}
-
 {% if post %}
-<div>
-  
-  <div><a href="{% url 'user_view' post.user.id %}">{{ post.user }}</a></div>
-  <div>{{ post.time }}</div>
-  <div data-post-content id='postContent'>{{ post.content }}</div>
 
-  {% if post.user == user %}
-  <form data-post-edit-form="{{post.id}}" id='editForm'>
-    <textarea data-post-edit-input id='editInput' type="text">{{ post.content }}</textarea>
-    <button type="submit">Edit</button>
-  </form>
-  <button data-post-edit-btn id='editBtn'>Edit</button>
-  {% endif %}
-
-</div>
-
-<hr>
-
-{% likebtn user post %}
+<div class="post">
   
-<hr>
-  
-<div>
-
-  <h5>Comments: {{ post.post_comments.count }}</h5>
-  
-  {% if user.is_authenticated %}
-  <form action="{% url 'post_comment' %}" method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="post" value="{{ post.id }}">
-    <input type="text" name="content">
-    <button type="submit">Comment</button>
-  </form>
-  {% endif %}
-  
-  {% for comment in post.post_comments.all %}
-  <div>
-    {{ comment.user }}: {{ comment.content }} | {{ comment.time }}
+  <div class="header">
+    <a class="user" href="{% url 'user_view' post.user.id %}">{{ post.user }}</a>
+    <div class="sep"></div>
+    <div class="time">{{ post.time }}</div>
+    
+    {% if post.user == user %}
+    <div class="sep"></div>
+    <button class="btn btn-sm btn-outline-secondary" data-post-edit-btn>Edit</button>
+    {% endif %}
   </div>
-  {% endfor %}
-  
+
+  <div class="content">
+    <div data-post-content>
+      {{ post.content }}
+    </div>
+      
+    {% if post.user == user %}
+    <form data-post-edit-form="{{post.id}}">
+      <textarea class="form-control mb-1" type="text" data-post-edit-input>{{ post.content }}</textarea>
+      <button class="btn btn-sm btn-primary" type="submit">Edit</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="footer">
+    {% likebtn user post %}
+    <div class="sep"></div>
+    <div>Comments: {{ post.post_comments.count }}</div>
+  </div>
+
 </div>
+
+{% if user.is_authenticated %}
+<form class="comment-form" action="{% url 'post_comment' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="post" value="{{ post.id }}">
+  <textarea class="form-control mb-1" type="text" name="content"></textarea>
+  <button class="btn btn-sm btn-primary" type="submit">Add comment</button>
+</form>
 {% endif %}
 
+<div>
+  {% for comment in post.post_comments.all %}
+  <div class="comment">
+    <div class="header">
+      <a href="{% url 'user_view' comment.user.id %}" class="user">{{ comment.user }}</a>
+      <div class="sep"></div>
+      <div class="time">{{ comment.time }}</div>
+    </div>
+    <div class="content">
+      {{ comment.content }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endif %}
 {% endblock %}

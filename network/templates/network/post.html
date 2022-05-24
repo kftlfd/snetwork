@@ -6,6 +6,7 @@
     <a class="user" href="{% url 'user_view' post.user.id %}">
       {{ post.user }}
     </a>
+    <div class="sep"></div>
     <div class="time">{{ post.time }}</div>
   </div>
 
@@ -13,6 +14,7 @@
 
   <div class="footer">
     {% likebtn user post %}
+    <div class="sep"></div>
     <a class="comments" href="{% url 'post_view' post.id %}">
       Comments: {{ post.post_comments.count }}
     </a>
