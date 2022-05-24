@@ -27,6 +27,10 @@
   {% endif %}
 </div>
 
+{% if user == u %}
+{% include "network/post-add.html" %}
+{% endif %}
+
 {% for post in posts %}
 {% include "network/post.html" %}
 {% endfor %}
