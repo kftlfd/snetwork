@@ -11,14 +11,14 @@ urlpatterns = [
     path("register", views.register, name="register"),
 
     path("post/<int:post_id>", views.post_view, name="post_view"),
-    path("user/<int:user_id>", views.user_view, name="user_view"),
-    path("feed", views.user_feed, name="user_feed"),
-    path("follow/<int:user_id>", views.user_follow, name="user_follow"),
+    path("post/add", views.post_add, name="post_add"),
+    path("post/edit", views.post_edit, name="post_edit"),
+    path("post/reaction", views.post_reaction, name="post_reaction"),
+    path("post/comment", views.post_comment, name="post_comment"),
 
-    path("add-post", views.api_add_post, name="add-post"),
-    path("add-reaction", views.api_add_reaction, name="add-reaction"),
-    path("add-comment", views.api_add_comment, name="add-comment"),
-    path("spa/post/<int:post_id>", views.api_post, name="api-post"),
+    path("user/<int:user_id>", views.user_view, name="user_view"),
+    path("user/follow", views.user_follow, name="user_follow"),
+    path("feed", views.user_feed, name="user_feed"),
     
-    re_path(r'^spa.*', views.spa, name="spa")
+    re_path(r'^spa/.*', views.spa, name="spa")
 ]

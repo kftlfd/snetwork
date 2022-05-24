@@ -1,7 +1,100 @@
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+import json
+
 from .models import *
 
 
 def post_view(request, post_id):
     post = Post.objects.get(pk=post_id)
     return render(request, "network/post-page.html", {'post': post})
+
+
+def post_add(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        data = json.loads(request.body)
+        u = request.user
+        c = data.get('content', None)
+        try:
+            new_post = Post(user=u, content=c)
+            new_post.save()
+            return HttpResponse(status=201)
+        except:
+            return HttpResponse(status=500)
+    return HttpResponse(status=400)
+
+
+def post_edit(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        post_id = data.get('post', None)
+        if not post_id:
+            return HttpResponse(status=400)
+
+        try:
+            post = Post.objects.get(pk=post_id)
+        except:
+            return HttpResponse(status=404)
+
+        if request.user != post.user:
+            return HttpResponse(status=403)
+            
+        try:
+            post.content = data.get('content', post.content)
+            post.save()
+            return HttpResponse(status=201)
+        except:
+            return HttpResponse(status=500)
+    return HttpResponse(status=400)
+
+
+def post_reaction(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        data = json.loads(request.body)
+
+        post_id = data.get('post', None)
+        t = data.get('type', None)
+        a = data.get('action', None)
+        if not post_id or not t or not a:
+            return HttpResponse(status=400)
+        
+        try:
+            post = Post.objects.get(pk=post_id)
+        except:
+            return HttpResponse(status=404)
+
+        u = request.user
+        r = post.post_reactions.filter(user=u)
+
+        if a == 'add':
+            try:
+                new_reaction = Reaction(user=u, post=post, type=t)
+                new_reaction.save()
+                return HttpResponse(status=201)
+            except:
+                return HttpResponse(status=500)
+
+        elif r:
+            try:
+                reaction = r.all()
+                reaction.delete()
+                return HttpResponse(status=204)
+            except:
+                return HttpResponse(status=500)
+
+    return HttpResponse(status=400)
+
+
+def post_comment(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        u = request.user
+        p = Post.objects.get(pk=request.POST['post'])
+        c = request.POST['content']
+        try:
+            new_comment = Comment(user=u, post=p, content=c)
+            new_comment.save()
+            return HttpResponse(status=201)
+        except:
+            return HttpResponse(status=500)
+    return HttpResponse(status=400)

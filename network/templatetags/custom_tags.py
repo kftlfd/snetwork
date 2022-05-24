@@ -10,8 +10,8 @@ def user_reacted(user, post):
 def user_follows(user, following):
     return following in user.following.all()
 
-@register.inclusion_tag('network/like_btn.html')
-def like_btn(user, post):
+@register.inclusion_tag('network/likebtn.html')
+def likebtn(user, post):
     context = {
         'u': user, 
         'post': post, 

@@ -5,84 +5,33 @@
 
 {% if post %}
 <div>
+  
+  <div><a href="{% url 'user_view' post.user.id %}">{{ post.user }}</a></div>
+  <div>{{ post.time }}</div>
+  <div data-post-content id='postContent'>{{ post.content }}</div>
 
   {% if post.user == user %}
-  <button id='editBtn'>Edit</button>
-  {% endif %}
-  <div><a href="{% url 'user_view' post.user.id %}">{{ post.user }}</a></div>
-  <div id='postContent'>{{ post.content }}</div>
-  <form id='editForm'>
-    <input id='editInput' type="text" value="{{ post.content }}">
+  <form data-post-edit-form="{{post.id}}" id='editForm'>
+    <textarea data-post-edit-input id='editInput' type="text">{{ post.content }}</textarea>
     <button type="submit">Edit</button>
   </form>
-  <div>{{ post.time }}</div>
+  <button data-post-edit-btn id='editBtn'>Edit</button>
+  {% endif %}
 
-  <script>
-    const editBtn = document.querySelector('#editBtn');
-    const postContent = document.querySelector('#postContent');
-    const editForm = document.querySelector('#editForm');
-    const editInput = document.querySelector('#editInput');
+</div>
 
-    editForm.style.display = 'none';
+<hr>
 
-    editBtn.addEventListener('click', ()=>{
-      if (editForm.style.display == 'none') {
-        postContent.style.display = 'none';
-        editForm.style.display = 'block';
-      } else {
-        postContent.style.display = 'block';
-        editForm.style.display = 'none';
-      }
-    });
-
-    // from https://docs.djangoproject.com/en/4.0/ref/csrf/
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
-
-    editForm.addEventListener('submit', () => {
-      event.preventDefault()
-
-      fetch('{% url "api-post" post.id %}', {
-        method: 'POST',
-        headers: {'X-CSRFToken': csrftoken},
-        body: JSON.stringify({
-          content: editInput.value
-        })
-      })
-      .then(r => console.log(r))
-      .catch(e => console.error(e));
-
-      postContent.innerText = editInput.value;
-      postContent.style.display = 'block';
-      editForm.style.display = 'none';
-    });
-
-  </script>
-
-  <hr>
-
-  {% like_btn user post %}
+{% likebtn user post %}
   
-  <hr>
+<hr>
   
-  <h5>Comments</h5>
+<div>
+
+  <h5>Comments: {{ post.post_comments.count }}</h5>
   
   {% if user.is_authenticated %}
-  <form action="{% url 'add-comment' %}" method="POST">
+  <form action="{% url 'post_comment' %}" method="POST">
     {% csrf_token %}
     <input type="hidden" name="post" value="{{ post.id }}">
     <input type="text" name="content">
@@ -90,15 +39,12 @@
   </form>
   {% endif %}
   
+  {% for comment in post.post_comments.all %}
   <div>
-    <div>Comments: {{ post.post_comments.count }}</div>
-    {% for comment in post.post_comments.all %}
-    <div>
-      {{ comment.user }}: {{ comment.content }} | {{ comment.time }}
-    </div>
-    {% endfor %}
+    {{ comment.user }}: {{ comment.content }} | {{ comment.time }}
   </div>
-    
+  {% endfor %}
+  
 </div>
 {% endif %}
 

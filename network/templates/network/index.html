@@ -2,23 +2,10 @@
 
 {% block body %}
 
-{% if user.is_authenticated %}
-<div class="card card-body mb-3">
-  <form action="{% url 'add-post' %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="content">
-    <button type="submit">Post</button>
-  </form>
-</div>
-{% endif %}
+{% include "network/post-add.html" %}
 
-{% if posts %}
-<div>
-  {% for post in posts%}
-    {% include "network/post.html" %}
-  {% endfor %}
-</div>
-{% include 'network/pagination.html' %}
-{% endif %}
+{% for post in posts%}
+{% include "network/post.html" %}
+{% endfor %}
 
 {% endblock %}
