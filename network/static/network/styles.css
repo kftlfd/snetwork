@@ -83,8 +83,27 @@ body {
   margin-bottom: 0.75rem;
 }
 
-.add-form {
+.add-form,
+.user-profile {
   padding-bottom: 1rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.user-profile .username {
+  font-size: 2rem;
+}
+.user-profile .stats {
+  display: flex;
+  gap: 1rem;
+}
+.user-profile .label {
+  color: #555;
+  font-size: 0.9rem;
+  margin-right: 0.3rem;
 }

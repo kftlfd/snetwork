@@ -2,32 +2,34 @@
 {% load custom_tags %}
 
 {% block body %}
-
 {% if u %}
 
-<div>
-  <div>{{ u.username }}</div>
-  <div>Following: {{ u.following.count }}</div>
-  <div>Followers: {{ u.followers.count }}</div>
+<div class="user-profile">
+  <div class="username">{{ u.username }}</div>
+  
+  <div class="stats">
+    <div><span class="label">Following:</span>{{ u.following.count }}</div>
+    <div class="sep"></div>
+    <div><span class="label">Followers:</span>{{ u.followers.count }}</div>
+  </div>
+  
+  {% if user.is_authenticated and user != u %}
+  <form action="{% url 'user_follow' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="user" value="{{u.id}}">
+    {% user_follows user u as follows %}
+    {% if not follows %}
+    <button class="btn btn-primary" type="submit" name="follow" value="true">Follow</button>
+    {% else %}
+    <button class="btn btn-outline-secondary" type="submit" name="follow" value="false">Unfollow</button>
+    {% endif %}
+  </form>
+  {% endif %}
 </div>
 
-{% if user.is_authenticated and user != u %}
-<form action="{% url 'user_follow' u.id %}" method="POST">
-  {% csrf_token %}
-  {% user_follows user u as follows %}
-  {% if not follows %}
-  <button type="submit" name="follow" value="true">Follow</button>
-  {% else %}
-  <button type="submit" name="follow" value="false">Unfollow</button>
-  {% endif %}
-</form>
-{% endif %}
-
 {% for post in posts %}
-  <br>
-  {% include "network/post.html" %}
+{% include "network/post.html" %}
 {% endfor %}
 
 {% endif %}
-
 {% endblock %}
