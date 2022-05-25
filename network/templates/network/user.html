@@ -8,9 +8,15 @@
   <div class="username">{{ u.username }}</div>
   
   <div class="stats">
-    <div><span class="label">Following:</span>{{ u.following.count }}</div>
+    <div>
+      <span class="label">Following:</span>
+      <span>{{ u.following.count }}</span>
+    </div>
     <div class="sep"></div>
-    <div><span class="label">Followers:</span>{{ u.followers.count }}</div>
+    <div>
+      <span class="label">Followers:</span>
+      <span data-followers-count>{{ u.followers.count }}</span>
+    </div>
   </div>
   
   {% if user.is_authenticated and user != u %}

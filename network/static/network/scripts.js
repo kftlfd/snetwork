@@ -173,6 +173,7 @@ if (document.querySelector('[data-comment-form]')) {
 // ***** follow user *****
 if (document.querySelector('[data-follow-form]')) {
   const followForm = document.querySelector('[data-follow-form]');
+  const followCount = document.querySelector('[data-followers-count]');
 
   followForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -188,7 +189,17 @@ if (document.querySelector('[data-follow-form]')) {
     .then(r => {
       console.log(r);
       if (r.ok) {
-        history.go(0);
+        if (followForm.follow.value === 'true'){
+          followForm.follow.className = 'btn btn-outline-secondary';
+          followForm.follow.value = 'false';
+          followForm.follow.innerText = 'Unfollow'
+          followCount.innerText = Number(followCount.innerText) + 1;
+        } else {
+          followForm.follow.className = 'btn btn-primary';
+          followForm.follow.value = 'true';
+          followForm.follow.innerText = 'Follow'
+          followCount.innerText = Number(followCount.innerText) - 1;
+        }
       } else {
         window.alert('Failed to update follow status')
       }
