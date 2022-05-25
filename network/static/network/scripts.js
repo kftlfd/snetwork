@@ -66,11 +66,13 @@ if (document.querySelector('[data-add-post-form]')) {
         content: addContent.value
       })
     })
-    .then(r => {
+    .then(async r => {
       console.log(r);
       if (r.ok) {
+        let np = document.createElement('div');
+        np.innerHTML = await r.text();
+        document.querySelector('[data-posts]').prepend(np);
         addContent.value = '';
-        history.go(0);
       } else {
         window.alert('Failed to create post')
       }
@@ -156,10 +158,10 @@ if (document.querySelector('[data-comment-form]')) {
     .then(async r => {
       console.log(r);
       if (r.ok) {
-        data = await r.text()
         let nc = document.createElement('div');
-        nc.innerHTML = data;
+        nc.innerHTML = await r.text();
         document.querySelector('[data-comments]').prepend(nc);
+        commentForm.content.value = '';
       } else {
         window.alert('Failed to create comment')
       }

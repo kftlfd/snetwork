@@ -19,7 +19,9 @@ def post_add(request):
         try:
             new_post = Post(user=u, content=c)
             new_post.save()
-            return HttpResponse(status=201)
+            return HttpResponse(
+                render(request, "network/post.html", {'post': new_post, 'user': request.user}), 
+                status=201)
         except:
             return HttpResponse(status=500)
     return HttpResponse(status=400)

@@ -15,7 +15,9 @@ body {
   padding-bottom: 3.5rem;
 }
 .body h3 {
-  margin: 2rem 1rem 1rem;
+  margin: 0;
+  padding: 2rem 1rem 1rem;
+  border-bottom: 1px solid #eee;
 }
 
 
@@ -100,9 +102,7 @@ body {
 
 .add-form {
   padding: 1rem;
-}
-.add-form:nth-child(2){
-  border-top: 1px solid #eee; 
+  border-bottom: 1px solid #eee;
 }
 
 
@@ -110,9 +110,6 @@ body {
   padding: 2rem;
 }
 .post:not(.page) {
-  border-top: 1px solid #eee;
-}
-.post:last-of-type {
   border-bottom: 1px solid #eee;
 }
 .post .header,
@@ -205,6 +202,7 @@ body {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
+  border-bottom: 1px solid #eee;
 }
 .user-profile .username {
   font-size: 2rem;

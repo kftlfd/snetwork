@@ -6,8 +6,10 @@
 
 {% include "network/post-add.html" %}
 
-{% for post in posts%}
-{% include "network/post.html" %}
-{% endfor %}
+<div data-posts>
+  {% for post in posts%}
+  {% include "network/post.html" %}
+  {% endfor %}
+</div>
 
 {% endblock %}
