@@ -4,7 +4,7 @@
 {% block body %}
 {% if post %}
 
-<div class="post page">
+<div class="post">
   
   <div class="header">
     <a class="user" href="{% url 'user_view' post.user.id %}">{{ post.user }}</a>
@@ -44,6 +44,11 @@
   <input type="hidden" name="post" value="{{ post.id }}">
   <textarea class="form-control mb-1" type="text" name="content"></textarea>
   <button class="btn btn-sm btn-primary" type="submit">Add comment</button>
+</form>
+{% else %}
+<form class="comment-form" action="{% url 'login' %}" method="GET">
+  <button class="btn btn-sm btn-outline-primary" type="submit">Log In</button>
+  <span>to leave a comment.</span>
 </form>
 {% endif %}
 

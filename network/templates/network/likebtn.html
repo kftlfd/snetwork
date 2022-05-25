@@ -11,7 +11,7 @@
     <span data-like-count="{{post.id}}">{{ post.post_reactions.count }}</span>
   </form>
 {% else %}
-  <form action="{% url 'login' %}" method="GET">
+  <form class="likes" action="{% url 'login' %}" method="GET">
     <button class="like-btn" type="submit"></button>
     <span>{{ post.post_reactions.count }}</span>
   </form>
