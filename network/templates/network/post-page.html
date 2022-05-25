@@ -47,18 +47,9 @@
 </form>
 {% endif %}
 
-<div>
+<div data-comments>
   {% for comment in comments %}
-  <div class="comment">
-    <div class="header">
-      <a href="{% url 'user_view' comment.user.id %}" class="user">{{ comment.user }}</a>
-      <div class="sep"></div>
-      <div class="time">{{ comment.time }}</div>
-    </div>
-    <div class="content">
-      {{ comment.content }}
-    </div>
-  </div>
+  {% include "network/comment.html" %}
   {% endfor %}
 </div>
 

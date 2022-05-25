@@ -12,6 +12,7 @@ body {
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
   padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
 }
 .body h3 {
   margin: 2rem 1rem 1rem;
@@ -182,14 +183,15 @@ body {
 }
 
 
+.comment-form {
+  border-top: 1px solid #eee;
+}
 .comment-form,
 .comment {
   padding: 1rem;
-  border-top: 1px solid #eee;
-}
-.comment:last-of-type{
   border-bottom: 1px solid #eee;
 }
+/* .comment:last-of-type {} */
 .comment .header {
   display: flex;
   align-items: center;

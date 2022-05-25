@@ -104,7 +104,9 @@ def post_comment(request):
         try:
             new_comment = Comment(user=u, post=post, content=content)
             new_comment.save()
-            return HttpResponse(status=201)
+            return HttpResponse(
+                render(request, "network/comment.html", {'comment': new_comment}), 
+                status=201)
         except:
             return HttpResponse(status=500)
     return HttpResponse(status=400)

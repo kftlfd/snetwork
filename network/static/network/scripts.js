@@ -153,11 +153,13 @@ if (document.querySelector('[data-comment-form]')) {
         content: commentForm.content.value
       })
     })
-    .then(r => {
+    .then(async r => {
       console.log(r);
       if (r.ok) {
-        commentForm.content.value = '';
-        history.go(0);
+        data = await r.text()
+        let nc = document.createElement('div');
+        nc.innerHTML = data;
+        document.querySelector('[data-comments]').prepend(nc);
       } else {
         window.alert('Failed to create comment')
       }
