@@ -27,7 +27,6 @@ document.querySelectorAll('[data-like-form]').forEach(form => {
       headers: {'X-CSRFToken': this.csrfmiddlewaretoken.value},
       body: JSON.stringify({
         post: Number(this.post.value),
-        type: this.type.value,
         action: this.action.value
       })
     })

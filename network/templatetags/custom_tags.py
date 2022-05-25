@@ -15,10 +15,8 @@ def likebtn(user, post):
     context = {
         'u': user, 
         'post': post, 
-        'reacted': False, 
-        'type': None}
+        'reacted': False}
     if user.is_authenticated:
         reaction = post.post_reactions.filter(user=user).first()
         context['reacted'] = True if reaction else False
-        context['type'] = reaction.type if reaction else None
     return context

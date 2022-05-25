@@ -2,7 +2,6 @@
   <form class="likes" data-like-form="{{post.id}}" action="{% url 'post_reaction' %}" method="POST">
     {% csrf_token %}
     <input type="hidden" name="post" value={{ post.id }}>
-    <input type="hidden" name="type" value=1>
     {% if reacted %}
       <button data-like-btn="{{post.id}}" class="like-btn liked" type="submit" name="action" value="remove"></button>
     {% else %}

@@ -8,7 +8,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "time")
 
 class ReactionAdmin(admin.ModelAdmin):
-    list_display = ("id", "post", "user", "type")
+    list_display = ("id", "post", "user")
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("id", "post", "user", "time")

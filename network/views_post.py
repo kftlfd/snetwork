@@ -58,9 +58,8 @@ def post_reaction(request):
         data = json.loads(request.body)
 
         post_id = data.get('post', None)
-        t = data.get('type', None)
         a = data.get('action', None)
-        if not post_id or not t or not a:
+        if not post_id or not a:
             return HttpResponse(status=400)
         
         try:
@@ -71,9 +70,9 @@ def post_reaction(request):
         u = request.user
         r = post.post_reactions.filter(user=u)
 
-        if a == 'add':
+        if not r and a == 'add':
             try:
-                new_reaction = Reaction(user=u, post=post, type=t)
+                new_reaction = Reaction(user=u, post=post)
                 new_reaction.save()
                 return HttpResponse(status=201)
             except:
