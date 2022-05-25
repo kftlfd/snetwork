@@ -1,6 +1,6 @@
 {% load custom_tags %}
 
-<div class="card card-body mb-3 post">
+<div class="post">
 
   <div class="header">
     <a class="user" href="{% url 'user_view' post.user.id %}">
@@ -16,7 +16,7 @@
     {% likebtn user post %}
     <div class="sep"></div>
     <a class="comments" href="{% url 'post_view' post.id %}">
-      Comments: {{ post.post_comments.count }}
+      <span class="label">Comments:</span>{{ post.post_comments.count }}
     </a>
   </div>
 
