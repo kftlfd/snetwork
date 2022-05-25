@@ -19,6 +19,4 @@ urlpatterns = [
     path("user/<int:user_id>", views.user_view, name="user_view"),
     path("user/follow", views.user_follow, name="user_follow"),
     path("feed", views.user_feed, name="user_feed"),
-    
-    re_path(r'^spa/.*', views.spa, name="spa")
 ]
