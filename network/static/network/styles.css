@@ -160,15 +160,17 @@ body {
   background-color: #eee;
 }
 .post .header .time,
-.comment .header .time {
+.comment .header .time,
+.post .edited {
   font-size: 0.8rem;
   color: #555;
+}
+.post .edited {
+  margin-bottom: 0.5rem;
 }
 .post .content {
   margin: 0.5rem 0;
   padding: 1rem 0;
-  /* border-top: 1px solid #eee; */
-  /* border-bottom: 1px solid #eee; */
 }
 .post .footer .likes {
   gap: 0.5rem;

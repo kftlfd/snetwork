@@ -69,9 +69,7 @@ if (document.querySelector('[data-add-post-form]')) {
     .then(async r => {
       console.log(r);
       if (r.ok) {
-        let np = document.createElement('div');
-        np.innerHTML = await r.text();
-        document.querySelector('[data-posts]').prepend(np);
+        document.querySelector('[data-posts]').insertAdjacentHTML('afterbegin', await r.text());
         addContent.value = '';
       } else {
         window.alert('Failed to create post')
@@ -91,9 +89,20 @@ if (document.querySelector('[data-post-edit-btn]')) {
   const editBtn = document.querySelector('[data-post-edit-btn]');
   const editForm = document.querySelector('[data-post-edit-form]');
   const editInput = document.querySelector('[data-post-edit-input]');
+  const editSubmit = document.querySelector('[data-post-edit-submit]');
   const postId = document.querySelector('[data-post-edit-form]').dataset.postEditForm;
 
-  function toggleEfitForm() {
+  editSubmit.disabled = true;
+  let post = postContent.innerText;
+  editInput.addEventListener('keyup', () => {
+    if (editInput.value !== post && editInput.value !== '') {
+      editSubmit.disabled = false;
+    } else {
+      editSubmit.disabled = true;
+    }
+  });
+
+  function toggleEditForm() {
     if (editForm.style.display == 'none') {
       postContent.style.display = 'none';
       editForm.style.display = 'block';
@@ -104,8 +113,8 @@ if (document.querySelector('[data-post-edit-btn]')) {
       editBtn.innerText = 'Edit';
     }
   }
-  toggleEfitForm();
-  editBtn.addEventListener('click', toggleEfitForm);
+  toggleEditForm();
+  editBtn.addEventListener('click', toggleEditForm);
 
   editForm.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -124,7 +133,17 @@ if (document.querySelector('[data-post-edit-btn]')) {
       console.log(r);
       if (r.ok) {
         postContent.innerText = editInput.value;
-        toggleEfitForm();
+        let edited = document.querySelector('.edited');
+        if (edited) {
+          edited.innerText = 'Edited: just now';
+        } else {
+          let footer = document.querySelector('.footer');
+          edited = document.createElement('div');
+          edited.className = 'edited';
+          edited.innerText = 'Edited: just now';
+          footer.insertAdjacentElement('beforebegin', edited);
+        }
+        toggleEditForm();
       } else {
         editInput.value = postContent.innerText;
       }
@@ -159,9 +178,7 @@ if (document.querySelector('[data-comment-form]')) {
     .then(async r => {
       console.log(r);
       if (r.ok) {
-        let nc = document.createElement('div');
-        nc.innerHTML = await r.text();
-        document.querySelector('[data-comments]').prepend(nc);
+        document.querySelector('[data-comments]').insertAdjacentHTML('afterbegin', await r.text());
         commentForm.content.value = '';
         commentCount.innerText = Number(commentCount.innerText) + 1;
       } else {

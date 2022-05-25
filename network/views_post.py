@@ -45,6 +45,7 @@ def post_edit(request):
             
         try:
             post.content = data.get('content', post.content)
+            post.edited = True
             post.save()
             return HttpResponse(status=201)
         except:

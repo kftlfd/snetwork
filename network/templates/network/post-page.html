@@ -25,11 +25,15 @@
     {% if post.user == user %}
     <form data-post-edit-form="{{post.id}}">
       <textarea class="form-control mb-1" type="text" data-post-edit-input>{{ post.content }}</textarea>
-      <button class="btn btn-sm btn-primary" type="submit">Edit</button>
+      <button class="btn btn-sm btn-primary" type="submit" data-post-edit-submit>Edit</button>
     </form>
     {% endif %}
   </div>
 
+  {% if post.edited %}
+  <div class="edited">Edited: {{ post.modified }}</div>
+  {% endif %}
+  
   <div class="footer">
     {% likebtn user post %}
     <div class="sep"></div>

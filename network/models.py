@@ -11,6 +11,8 @@ class Post(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user_posts')
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=timezone.now())
+    edited = models.BooleanField(default=False)
+    modified = models.DateTimeField(auto_now=timezone.now())
 
 
 class Reaction(models.Model):
