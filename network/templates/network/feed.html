@@ -7,12 +7,12 @@
 <h3>Feed</h3>
 
 {% if user.following.count < 1 %}
-  <div class="message">Not following anyone</div>
+  <div class="info">Not following anyone</div>
 {% else %}
   {% for post in posts%}
     {% include "network/post.html" %}
   {% empty %}
-    <div>No posts</div>
+    <div class="info">No posts</div>
   {% endfor %}
 {% endif %}
 

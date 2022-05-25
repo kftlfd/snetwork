@@ -36,6 +36,9 @@ body {
 .body .auth > * {
   margin-bottom: 1rem;
 }
+.body .info {
+  padding: 1rem;
+}
 
 
 .nav > .header {
@@ -224,7 +227,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 2rem;
   border-bottom: 1px solid #eee;
 }
 .user-profile .username {
