@@ -20,6 +20,23 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+.body h2 {
+  padding: 2rem 2rem 1rem;
+}
+.body .message {
+  margin: 2rem;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 0.25rem;
+  background-color: tomato;
+}
+.body .auth {
+  padding-inline: 2rem;
+}
+.body .auth > * {
+  margin-bottom: 1rem;
+}
+
 
 .nav > .header {
   display: flex;
@@ -58,9 +75,9 @@ body {
   margin-top: 1.5rem;
   gap: 0.5rem;
 }
-.nav .sidebar .nav-item:hover {
+.nav .sidebar .nav-item:hover,
+.nav .sidebar .nav-item:active {
   background-color: #eee;
-  border-radius: 0.25rem;
   cursor: pointer;
 }
 .nav .sidebar .navbar-brand,
@@ -96,6 +113,7 @@ body {
   }
   .nav .sidebar .nav-item {
     margin-right: 1rem;
+    border-radius: 0.25rem;
   }
 }
 
@@ -108,8 +126,6 @@ body {
 
 .post {
   padding: 2rem;
-}
-.post:not(.page) {
   border-bottom: 1px solid #eee;
 }
 .post .header,
@@ -136,8 +152,11 @@ body {
   text-decoration: none;
 }
 .post .header .user:hover,
+.post .header .user:active,
 .post .footer .comments:hover,
-.comment .header .user:hover {
+.post .footer .comments:active,
+.comment .header .user:hover,
+.comment .header .user:active {
   background-color: #eee;
 }
 .post .header .time,
@@ -180,9 +199,6 @@ body {
 }
 
 
-.comment-form {
-  border-top: 1px solid #eee;
-}
 .comment-form,
 .comment {
   padding: 1rem;
