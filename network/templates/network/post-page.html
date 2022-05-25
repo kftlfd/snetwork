@@ -33,7 +33,10 @@
   <div class="footer">
     {% likebtn user post %}
     <div class="sep"></div>
-    <div>Comments: {{ post.post_comments.count }}</div>
+    <div>
+      <span>Comments: </span>
+      <span data-comment-count>{{ post.post_comments.count }}</span>
+    </div>
   </div>
 
 </div>

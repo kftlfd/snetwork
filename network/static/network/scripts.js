@@ -143,6 +143,7 @@ if (document.querySelector('[data-post-edit-btn]')) {
 // ***** add comment *****
 if (document.querySelector('[data-comment-form]')) {
   const commentForm = document.querySelector('[data-comment-form]');
+  const commentCount = document.querySelector('[data-comment-count]');
 
   commentForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -162,6 +163,7 @@ if (document.querySelector('[data-comment-form]')) {
         nc.innerHTML = await r.text();
         document.querySelector('[data-comments]').prepend(nc);
         commentForm.content.value = '';
+        commentCount.innerText = Number(commentCount.innerText) + 1;
       } else {
         window.alert('Failed to create comment')
       }
