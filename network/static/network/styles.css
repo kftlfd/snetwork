@@ -84,6 +84,11 @@ body {
 .nav .sidebar .nav-item {
   padding-left: 1rem;
 }
+.nav .sidebar .navbar-brand .brand {
+  color: #fbfbfb;
+  background-color: #0d6efd;
+  border-radius: 0.25rem;
+}
 
 
 @media screen and (min-width: 900px) {
